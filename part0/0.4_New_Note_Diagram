@@ -1,0 +1,42 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User types note and clicks "Save"
+
+    browser->>server: POST /new_note (form submit)
+    activate server
+
+    Note right of server: Server receives form data
+    server->>server: Push note to in-memory array
+
+    server-->>browser: 302 Redirect to /notes
+    deactivate server
+
+    Note right of browser: Browser follows redirect
+
+    browser->>server: GET /notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    Note right of browser: Browser parses HTML and discovers assets
+
+    browser->>server: GET /main.css
+    activate server
+    server-->>browser: main.css file
+    deactivate server
+
+    browser->>server: GET /main.js
+    activate server
+    server-->>browser: main.js file
+    deactivate server
+
+    Note right of browser: Browser executes main.js
+
+    browser->>server: GET /data.json
+    activate server
+    server-->>browser: JSON array of notes
+    deactivate server
+
+    Note right of browser: JS parses JSON and renders a list is parsed JSON
