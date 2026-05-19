@@ -1,0 +1,27 @@
+
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User writes a note and submits the form
+
+    browser->>browser: form.onsubmit triggered
+    browser->>browser: preventDefault()
+
+    browser->>browser: Create note object
+    Note right of browser: { content: "...", date: new Date() }
+
+    browser->>browser: notes.push(note)
+
+    browser->>browser: redrawNotes()
+    Note right of browser: Browser updates the UI immediately without waiting for the server
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+
+    Note left of server: Request body contains the new note as JSON
+
+    server-->>browser: 201 Created
+    deactivate server
+
+    Note right of browser: Browser logs the server response to the console

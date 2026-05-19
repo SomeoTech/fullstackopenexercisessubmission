@@ -1,0 +1,32 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET /exampleapp/
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+    Note right of browser: Browser parses HTML and discovers assets
+
+    browser->>server: GET /exampleapp/main.css
+    activate server
+    server-->>browser: main.css file
+    deactivate server
+
+    browser->>server: GET /exampleapp/spa.js
+    activate server
+    server-->>browser: spa.js file
+    deactivate server
+
+    Note right of browser: Browser executes spa.js
+
+    browser->>server: GET /exampleapp/data.json
+    activate server
+    server-->>browser: JSON array of notes
+    deactivate server
+
+    Note right of browser: spa.js parses JSON and calls redrawNotes()
+    Note right of browser: redrawNotes() renders list with existing notes
+
+    Note right of browser: Page is fully loaded and interactive
